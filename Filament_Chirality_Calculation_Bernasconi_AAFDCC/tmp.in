@@ -1,0 +1,21 @@
+;*** Input file for solar_filaments program
+
+IMAGE   = bbso_halph_fr_20151101_225412.fts
+IN_PATH = /home/bernapn/filaments/src/idl
+OUT_PATH= /home/bernapn/filaments/src/idl
+I_THRSH =    -750
+U_THRSH =    -500
+MIN_AREA=      250
+DISP_DIM=      0.490000
+SMTH_IMG=        0
+BARB_ANG=       5.00000
+MAX_DIST=       35
+FIX_BGR =        1
+SHOW_PIX=        0
+SHOW_BBX=        0
+SHOW_BND=        1
+SHOW_SPN=        1
+SAVE_TAB=        1
+SAVE_MSK=        1
+SAVE_PNG=        1
+SAVE_DAT=        1
