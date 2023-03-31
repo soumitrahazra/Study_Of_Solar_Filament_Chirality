@@ -1,0 +1,29 @@
+;* Color table for filaments program
+;* format for color code:
+;* 	color_name
+;* 	red   green   blue
+;*
+;* NO BLANK LINES ARE ALLOWED BETWEEN color name and the next line with the
+;* color code !
+;* elsewhere blank lines are allowed.
+;* A `;*` indicates that the line is a comment and it will be ignored
+;*
+;* Pietro Bernasconi
+;*-----------------------------------------------------------------------------
+red
+255	0	0
+
+green
+0	255	0
+
+blue
+0	0	255
+
+cyan
+0	255	255
+
+yellow
+255	255	0
+
+purple
+160	32	240
