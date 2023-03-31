@@ -1,0 +1,61 @@
+;*** Template of input file for solar_filaments program
+;*** when the line starts with a ";*" it is considered a comment and will
+;*** be ignored by the code. The only necessary input parameter is IMAGE.
+;*** The format is like a FITS file: with the parameter name in the first 7
+;*** characters then fill with spaces , then the  8th char is an = and then
+;*** the value (a string, a float or an int).
+;*** The default values are indicated in parenthesis.
+
+;* Name of the fits file with the h-alpha full-disk image !! REQUIRED !!
+IMAGE   = image.fits
+
+;* Directory path where the image is localed (work directory). This is an
+;* optional parameter. The path can be also given directly in IMAGE. If so then
+;* this tag is ignored
+IN_PATH = 
+
+;* Directory path where the result table will be posted (same as IN_PATH)
+OUT_PATH= 
+
+;* Directory path where the VoEvent XML files are stored (def=same as OUT_PATH)
+VOE_PATH=
+
+MASK_DEG=75.0   ;* Do not consider features beyond XX degrees from center
+
+I_THRSH =-600	;* Identification threshold below which the filametn is
+                ;*     identifyed (-700)
+U_THRSH =-500   ;* Upper threshold: if set then the filament size, once
+		;*     identifyed is increased to reach this value (I_THRSH)
+MIN_AREA= 450	;* Minimum area of a filament, in pixels (500)
+
+DISP_DIM= 0.5	;* Fraction the full image size, for display purposes (1)
+
+START_X = 0	;* x coordinate of start point for window-box to analyze (0)
+START_Y = 0	;* y coordinate of start point for window-box to analyze (0)
+WIDTH   = 2032	;* width of window-box to analyze (max window X size)
+HEIGHT  = 2032	;* height of window-box to analyze (max window X size)
+
+SMTH_IMG= 0	;* Smoothing of image in pixels (recommended a value of 3)
+
+BARB_ANG= 3	;* Angle limit below which a barb is undefined
+
+MAX_DIST= 25    ;* Maximum distance between filam endpoints to consider them 1
+
+;* Flags (0 NOT set; 1 SET). Default is all not set:
+FIX_BGR = 0	;* Fixes the image background to remove non uniformities (slow)
+SHOW_PIX= 0	;* Highlight all pixels below the threshold in red
+SHOW_BBX= 0	;* Draw the bounding box surrounding each filament in red
+SHOW_BND= 1	;* Draw the boundary of each filament in yellow
+SHOW_SPN= 1	;* Draw the spine of each filament in cyan
+
+DO_VOE  = 0     ;* Creates a voevent output: XML file for every filament
+VOE_UPDT= 0     ;* Allows to update VOEvents already generated
+DO_TRACK= 0     ;* Tracks the filaments back in time
+SAVE_TAB= 1	;* Saves the filament data in an ASCII table
+SAVE_MSK= 1     ;* Saves the clusters mask as well as the sun_p array
+SAVE_PNG= 0	;* Saves the window image in as a .pgn file
+SAVE_FIL= 0	;* For each individual filament saves an image in a .png file
+SAVE_DAT= 0	;* Saves the filament data and other infos in a .dat file
+		;*  The data saved in the above can be used for later display
+		;*  of the filament data by using the interactive_disp idl
+		;*  program.
