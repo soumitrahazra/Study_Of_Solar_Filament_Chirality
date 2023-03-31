@@ -1,0 +1,273 @@
+;******************************************************************************
+;***                                                                        ***
+      pro merge_track, startdate, enddate, Filam_ID_Num=Filam_ID_Num,$
+                 TRACKLOC=trackLoc, NOAPPEND = no_append, VERBOSE=verbose
+;***                                                                        ***
+;******************************************************************************
+;+
+; NAME:
+;    merge_track
+;
+; PURPOSE:
+;    Merge all of the separate tracking tables into a numbered
+;    list of filaments in one big honkin trackin table
+;
+; CALLING SEQUENCE:
+;                  (startdate)    (enddate)
+;    merge_track, [yyyy,mm,dd], [yyyy,mm,dd], trackLoc=outpath, $
+;                 Filam_ID_Num=Filam_ID_Num, /NOAPPEND, /VERBOSE
+;
+; INPUTS:StartDate and EndDate: three part int arrays containing the
+;        dates for the start and end of the merging of tracking tables.
+;        (If the tracking programs have not been run for
+;        this segment of time, merge track will fail)
+;
+; OPTIONAL INPUT PARAMETERS:
+;    None
+;
+; KEYWORD PARAMETERS:
+;    trackLoc = string: The location of the tracking files. This also
+;               doubles as the place that the output file
+;               "TrackedFilaments" will go. Default is given by the call to
+;               the routine: filam_get_paths(/results)
+;    Filam_ID_Num = string: The number that filament numbering should start
+;               with.  Using the filament number at the end of the current
+;               tracking table before running this will make it pick up
+;               where it left off.  However, be sure to rm the old table if
+;               running merge track for the same series of days.  Since
+;               merge track runs very quickly, Filam_ID_Num has not been
+;               tested or used, it is simply defaulted to zero and every
+;               tracking table is used in one large loop.
+;    NOAPPEND = Flag: if set then a new file named "TrackdFilaments" is
+;               created instead to append the new merged data to the old
+;               file.
+;    VERBOSE  = Flag: if set then some information is printed on the screen
+;               while the procedure is running.
+;
+; OUTPUTS:
+;    file TrackedFilaments, a numbered and combined list of all of the
+;    filaments seen from start date to end date created from the
+;    tracking tables.  
+;
+; OPTIONAL OUTPUT PARAMETERS:
+;    None
+;
+; ROUTINES USED:
+;    None
+;
+; PROCEDURE:
+;-
+; MODIFICATION HISTORY: See at end of file
+;
+;******************************************************************************
+
+if (n_elements(trackLoc) le 0) then trackLoc=filam_get_paths(/results)
+if (n_elements(Filam_ID_Num) le 0) then Filam_ID_Num=0
+if (n_elements(verbose) le 0) then verbose=0
+
+;---- Defining some variables:
+skip=''
+data = ''
+date = ''
+strTime = ''
+
+;---- Calculate the julian date for startdate and enddate
+start_jday = julday(startdate(1),startdate(2),startdate(0))
+end_jday   = julday(enddate(1),enddate(2),enddate(0))
+now_jday   = start_jday
+
+get_lun,cur_table_unit
+get_lun,tracktable
+
+if (keyword_set(no_append)) then begin
+    openw, outTrackTable, trackLoc+'TrackedFilaments',/get_lun
+    printf, outTrackTable, 'Filam#   Date       UT-Time   day#   Area   Lat    Long'+$
+      '   Length   Angle  Chir  FrChir'
+    printf,outTrackTable, '-------------------------------------------------------'+$
+      '-------------------------------'
+endif else $
+  openw, outTrackTable, trackLoc+'TrackedFilaments',/Append,/get_lun
+
+if (verbose) then begin
+    print,'Merging traking tables into file:'
+    print,'     "',trackLoc+'TrackedFilaments','"'
+    print
+endif
+while (now_jday le end_jday) do begin
+    caldat, now_jday, month, day, year
+    cur_date = [year,month,day]
+    cur_date_str = make_datestring(year,month,day,sep='/')
+    cur_date_str_s = make_datestring(year,month,day)
+
+    year_month = strcompress(string(year),/rem) + '/'
+    if (month lt 10) then year_month = year_month + '0'
+    year_month = year_month + strcompress(string(month),/rem) + '/'
+
+    if (verbose) then begin
+        print,'    Day ',cur_date_str,' found following new filaments:'
+    endif
+
+    ;--- Determine the name of a tracking table from its day month and year.
+    ;--- All tracking tables are named yyyymmdd_track_*.tab
+
+    ;track_tab_names = get_table(cur_date, trackLoc, count=n_tables, /track)
+    ;filam_tab_names = get_table(cur_date, trackLoc + year_month)
+    filam_tab_names = get_table(trackLoc+year_month+'*'+cur_date_str_s+'*Ha.tab', count=n_tables)
+
+    ;--- proceed with the tracking if tracktables have been found:
+    ;--- Looping through all the tracking tables for this day:
+    for tabnum = 0, n_tables-1 do begin
+        old_Filam_ID_Num = Filam_ID_Num
+
+        openr, tracktable, track_tab_names(tabnum)
+
+        ;--- get the number of filaments in current date table:
+        cur_table = filam_tab_names(tabnum)
+        openr,cur_table_unit,cur_table, error=err
+        for i=1,8 do readf,cur_table_unit,skip
+        num_Fils = 0
+        while (EOF(cur_table_unit) le 0) do readf,cur_table_unit,num_Fils
+        close,cur_table_unit
+
+        ;--- Getting the current time string from the filaments table name:
+        tmp_time_str = strmid(cur_table, $
+                              strpos(cur_table,'_Ha',/reverse_search)-6,6)
+ 
+        cur_time_str = ''
+        for ii=0,2 do begin
+            cur_time_str = cur_time_str+strmid(tmp_time_str,ii*2,2)
+            if (ii ne 2) then cur_time_str = cur_time_str+':'
+        endfor
+
+        ;--- looping through all the filaments in current table:
+        for fil_num=0,num_Fils-1 do begin
+            ;--- reset strings
+            data='reset'
+            skip='reset'
+
+            ;--- skip 4 lines:
+            for i=1,4 do readf,tracktable,skip
+            prev=skip
+ 
+            ;--- keep track of previous lines
+            Time_Lasted=0
+            newFilament=0
+                               ;Keep track of how long each filament
+                               ;lasted and whether or not a new
+                               ;filament has been found with each check
+
+            readf,tracktable,data
+            while (data ne '') do begin
+                ;-- Extracts the information from the "data" string:
+                reads, data, $
+                  format='(A10,X,A8,X,A)', date, strTime, skip
+                    
+                ;-- If the filament is new (found on that day for the first
+                ;   time), then set newFilament and increment filam_id_num
+                if ( (strmid(prev,0,1) eq '-') AND $
+                     (date eq cur_date_str) AND $
+                     (strTime eq cur_time_str) ) then begin
+                    newFilament=1
+                    Filam_ID_Num=Filam_ID_Num+1
+                    if (verbose) then begin
+                        if (Filam_ID_Num-old_Filam_ID_Num eq 1) then $
+                          print,format='("     ",$)'
+                        print,format='(I6,$)',Filam_ID_Num
+                    endif
+                endif
+                prev=date
+
+                if (newFilament eq 1) then begin
+                    ;-- Print all extracted data into the new table in
+                    ;   TrackedFilaments.
+                    printf, outTrackTable, format='(I6, 3X, A)', $
+                      Filam_ID_num, data
+                endif
+
+                readf,tracktable,data
+            endwhile
+        endfor
+        close, tracktable
+;        if (verbose) then print
+        if ((verbose) and (old_Filam_ID_Num ne Filam_ID_Num)) then print
+    endfor
+;    if ((verbose) and (old_Filam_ID_Num eq Filam_ID_Num)) then print
+
+    ;-- Increase the day by one to go to the next day:
+    now_jday = now_jday+1
+
+endwhile 
+close, outTrackTable
+free_lun, cur_table_unit, tracktable, outTrackTable
+
+end
+;******************************************************************************
+;
+; MODIFICATION HISTORY:
+; $Log: merge_track.pro,v $
+; Revision 3.10  2010/10/27 20:54:57  bernapn1
+; Something
+;
+; Revision 3.9  2010/03/29 21:11:19  bernapn1
+; Added improvements:
+;   1) Now the output file names consistently have YYYYMMDD instead of the
+;      old YYYY_MM_DD
+;   2) Now there is the possiblity to save in addition to the full disk image
+;      also images of the individual filaments at 2x magnification
+;
+; Plus some bug fixes
+;
+; Revision 3.8  2010/01/21 22:00:52  bernapn1
+; Not sure what was done but small changes to improve performance
+;
+; Revision 3.7  2005/01/05 15:44:39  pietro
+; Added keyword NOAPPEND.
+;
+; Revision 3.6  2004/12/30 19:24:53  pietro
+; Now getting the default paths from filam_get_paths.
+;
+; Revision 3.5  2004/12/07 21:20:53  pietro
+; Some minor change
+;
+; Revision 3.4  2004/12/02 21:28:54  pietro
+; Fixed an output problem ad added verbose features
+;
+; Revision 3.3  2004/12/01 16:00:51  pietro
+; Changed do that now it can handle also multiple tracking tables for each
+; day
+;
+; Revision 3.2  2004/12/01 15:56:08  pietro
+; *** empty log message ***
+;
+; Revision 3.1  2004/11/19 22:38:09  pietro
+; made more efficient, this improvig the speed. Also made more readable.
+;
+; Revision 3.0  2004/10/27 14:38:18  pietro
+; Given revision 3.0
+;
+; Revision 2.7  2004/10/26 17:16:01  pietro
+; *** empty log message ***
+;
+; Revision 2.6  2004/08/24 19:00:28  pietro
+; Made the code a little more readable
+;
+; Revision 2.5  2004/07/30 15:49:23  hakimd
+; Merge_track can now handle tracking files with or without times included.
+; If times are not included however, merge_track will take 10 times longer
+; to run as it will generate the times that are missing
+;
+; Revision 2.4  2004/07/29 14:53:51  hakimd
+; Added a calculation for time of day for measurements into merge_track,
+; 	THIS IS ONLY TEMPORARY.
+; It only works because we only have one image per day.  It also makes
+; merge_track take 10 times as long to run.  The reason it is here is because
+; running merge_track 10 times is still faster than running track over from the
+; beginning.  At some time in the future we will have to make track pass
+; the time that it finds in the tables instead of finding it during
+; merge_track.
+;
+; Revision 2.3  2004/07/23 16:44:08  hakimd
+; Added modification log and commenting
+;
+;
+;Written by Daniel Hakim JHU/APL
