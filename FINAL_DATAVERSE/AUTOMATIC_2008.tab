@@ -1,0 +1,159 @@
+Ha Filament statistics for:
+               Date : 20080805_170059
+        Julian Date : 2454684.2090
+        Observatory : BBSO
+Sun radius [pixels] :  970.00
+Sun radius [arcsec] :  946.10
+         Area Units : millihemisphere
+       Length Units : milliRs
+
+  #   Area   A_rat   Xp   Yp    Lat   Long     Ang  Len #Brb #R  #L Chir   Track: jday   YYYYMMDD_hhmmss  FW/MR/SP
+--------------------------------------------------------------------------------------------------------------------
+  1  0.1390  0.54  -272 -761  -45.95 -23.72  -85.0   30   3   1   0   0      NEW
+  2  0.0453  0.24  -513 -693  -41.27 -44.60  -44.5   26   0   0   0   0      NEW
+
+
+Ha Filament statistics for:
+               Date : 20080807_084920
+        Julian Date : 2454685.8676
+        Observatory : KANZELHOEHE OBSERVATORY
+Sun radius [pixels] :  970.00
+
+
+No filaments detected!
+----------------------
+00
+
+
+Ha Filament statistics for:
+               Date : 20080809_061350
+        Julian Date : 2454687.7596
+        Observatory : KANZELHOEHE OBSERVATORY
+Sun radius [pixels] :  970.00
+Sun radius [arcsec] :  946.61
+         Area Units : millihemisphere
+       Length Units : milliRs
+
+  #   Area   A_rat   Xp   Yp    Lat   Long     Ang  Len #Brb #R  #L Chir   Track: jday   YYYYMMDD_hhmmss  FW/MR/SP
+--------------------------------------------------------------------------------------------------------------------
+  1  0.2010  0.33  -312 -719  -42.01 -25.58  -62.0   47   2   1   1   0    2454687.1539  20080808_154133  FW  2
+  2  0.1796  0.33  -255  703   52.08 -25.25   42.3   46   2   0   2   1      NEW
+
+
+
+Ha Filament statistics for:
+               Date : 20080813_162029
+        Julian Date : 2454692.1809
+        Observatory : BBSO
+Sun radius [pixels] :  970.00
+Sun radius [arcsec] :  947.31
+         Area Units : millihemisphere
+       Length Units : milliRs
+
+  #   Area   A_rat   Xp   Yp    Lat   Long     Ang  Len #Brb #R  #L Chir   Track: jday   YYYYMMDD_hhmmss  FW/MR/SP
+--------------------------------------------------------------------------------------------------------------------
+  1  0.0937  0.36   352  719   53.09  37.06   24.1   35   1   1   0   0    2454691.1669  20080812_160022  FW  3
+
+
+
+Ha Filament statistics for:
+               Date : 20080815_091646
+        Julian Date : 2454693.8866
+        Observatory : KANZELHOEHE OBSERVATORY
+Sun radius [pixels] :  970.00
+Sun radius [arcsec] :  947.59
+         Area Units : millihemisphere
+       Length Units : milliRs
+
+  #   Area   A_rat   Xp   Yp    Lat   Long     Ang  Len #Brb #R  #L Chir   Track: jday   YYYYMMDD_hhmmss  FW/MR/SP
+--------------------------------------------------------------------------------------------------------------------
+  1  0.1160  0.26  -141 -784  -47.22 -12.33  -37.2   41   1   1   0   0      NEW
+
+
+
+Ha Filament statistics for:
+               Date : 20080817_085621
+        Julian Date : 2454695.8725
+        Observatory : KANZELHOEHE OBSERVATORY
+Sun radius [pixels] :  970.00
+Sun radius [arcsec] :  947.94
+         Area Units : millihemisphere
+       Length Units : milliRs
+
+  #   Area   A_rat   Xp   Yp    Lat   Long     Ang  Len #Brb #R  #L Chir   Track: jday   YYYYMMDD_hhmmss  FW/MR/SP
+--------------------------------------------------------------------------------------------------------------------
+  1  0.1123  0.27  -347 -756  -45.33 -30.51   72.6   41   1   0   1   0      NEW
+
+
+Ha Filament statistics for:
+               Date : 20080819_060550
+        Julian Date : 2454697.7541
+        Observatory : KANZELHOEHE OBSERVATORY
+Sun radius [pixels] :  970.00
+Sun radius [arcsec] :  948.29
+         Area Units : millihemisphere
+       Length Units : milliRs
+
+  #   Area   A_rat   Xp   Yp    Lat   Long     Ang  Len #Brb #R  #L Chir   Track: jday   YYYYMMDD_hhmmss  FW/MR/SP
+--------------------------------------------------------------------------------------------------------------------
+  1  0.1248  0.32   612 -459  -23.26  43.22  -45.5   40   1   0   1   0    2454697.1457  20080818_152945  FW  3
+
+
+Ha Filament statistics for:
+               Date : 20080821_090210
+        Julian Date : 2454699.8765
+        Observatory : KANZELHOEHE OBSERVATORY
+Sun radius [pixels] :  970.00
+Sun radius [arcsec] :  948.69
+         Area Units : millihemisphere
+       Length Units : milliRs
+
+  #   Area   A_rat   Xp   Yp    Lat   Long     Ang  Len #Brb #R  #L Chir   Track: jday   YYYYMMDD_hhmmss  FW/MR/SP
+--------------------------------------------------------------------------------------------------------------------
+  1  0.2165  0.26   319  636   46.98  28.72   19.1   64   3   1   1   0    2454699.2292  20080820_173000  FW  2
+
+
+
+Ha Filament statistics for:
+               Date : 20080825_063301
+        Julian Date : 2454703.7729
+        Observatory : KANZELHOEHE OBSERVATORY
+Sun radius [pixels] :  970.00
+Sun radius [arcsec] :  949.46
+         Area Units : millihemisphere
+       Length Units : milliRs
+
+  #   Area   A_rat   Xp   Yp    Lat   Long     Ang  Len #Brb #R  #L Chir   Track: jday   YYYYMMDD_hhmmss  FW/MR/SP
+--------------------------------------------------------------------------------------------------------------------
+  1  0.1028  0.24   565  669   47.42  59.23   73.7   42   0   0   0   0      NEW
+  2  0.2054  0.34  -256  728   54.83 -27.19   57.7   50   1   0   1   0    2454702.7974  20080824_070812  FW  2
+  3  0.3254  0.29  -121  767   58.93 -13.95  -89.1   63   1   1   0   0    2454702.7974  20080824_070812  FW  3
+
+
+Ha Filament statistics for:
+               Date : 20080829_070342
+        Julian Date : 2454707.7942
+        Observatory : KANZELHOEHE OBSERVATORY
+Sun radius [pixels] :  970.00
+Sun radius [arcsec] :  950.31
+         Area Units : millihemisphere
+       Length Units : milliRs
+
+  #   Area   A_rat   Xp   Yp    Lat   Long     Ang  Len #Brb #R  #L Chir   Track: jday   YYYYMMDD_hhmmss  FW/MR/SP
+--------------------------------------------------------------------------------------------------------------------
+  1  0.1360  0.24  -560  541   38.79 -47.62  -51.4   46   0   0   0   0      NEW
+  2  0.1969  0.22   296  741   55.81  32.79   64.9   61   1   1   0   0    2454707.1665  20080828_155949  FW  1
+
+
+Ha Filament statistics for:
+               Date : 20080830_063716
+        Julian Date : 2454708.7759
+        Observatory : KANZELHOEHE OBSERVATORY
+Sun radius [pixels] :  970.00
+Sun radius [arcsec] :  950.52
+         Area Units : millihemisphere
+       Length Units : milliRs
+
+  #   Area   A_rat   Xp   Yp    Lat   Long     Ang  Len #Brb #R  #L Chir   Track: jday   YYYYMMDD_hhmmss  FW/MR/SP
+--------------------------------------------------------------------------------------------------------------------
+  1  0.1407  0.27  -457  528   38.70 -37.00   -8.2   49   1   0   1   0    2454708.2085  20080829_170016  FW  1
